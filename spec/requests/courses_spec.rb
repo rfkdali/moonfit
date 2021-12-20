@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Courses', type: :request do
   describe 'GET index' do
     let!(:courses) { create_list(:course, 3) }
-    before { get '/courses' }
+    before { get '/api/v1/courses' }
     it 'returns ok' do
       expect(response).to have_http_status(:ok)
     end
@@ -16,7 +16,7 @@ RSpec.describe 'Courses', type: :request do
   describe 'GET show' do
     context 'with coach' do
       let(:course) { create(:course, :with_coach ) }
-      before { get "/courses/#{course.id}" }
+      before { get "/api/v1/courses/#{course.id}" }
       it 'returns ok' do
         expect(response).to have_http_status(:ok)
       end
@@ -38,13 +38,13 @@ RSpec.describe 'Courses', type: :request do
 
     let(:params) {{data: { type: 'courses', attributes: {name:'Astrology 101'} }}}
     it 'returns ok' do
-      post "/courses", params: params.to_json, headers: headers
+      post "/api/v1/courses", params: params.to_json, headers: headers
       expect(response).to have_http_status(201)
     end
 
     it 'creates a new course' do
       expect {
-        post '/courses', params: params.to_json, headers: headers
+        post '/api/v1/courses', params: params.to_json, headers: headers
       }.to change(Course, :count).by(1)
     end
   end

@@ -1,4 +1,4 @@
-class CourseResource < JSONAPI::Resource
+class Api::V1::CourseResource < JSONAPI::Resource
   attributes :name, :self_assignable
   has_many :activities
   has_one :coach
